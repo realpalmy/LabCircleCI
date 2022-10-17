@@ -4,18 +4,49 @@ orbs:
   node: circleci/node@5.0.3
 
 jobs:
-  install-and-test:
+  test-and-deploy:
     executor:
       name: node/default
       tag: '16.17'
-    steps: 
-      - checkout 
-      - node/install-packages 
+    environment:
+      - REPOURL: << pipeline.project.git_url >>
+    steps:
+      - checkout
       - run:
-          command: npm run test
-          name: Run YARN tests
+          name: Setup evironment variables
+          command: |
+              echo "export REPOPATH=${REPOURL#https://github.com}" >> "$BASH_ENV"
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Test << pipeline.git.branch >>
+          command: yarn run test
+      - run:
+          name: Build << pipeline.git.branch >>
+          command: PUBLIC_URL=/${CIRCLE_PROJECT_REPONAME} npm run build #
+      - run:
+          name: Setup git user
+          command: |
+            git config --global user.email "nicha.satt@gmail.com"
+            git config --global user.name "Palmy"
+      - run:
+          name: Environment variables
+          command: |
+              echo ${CIRCLE_PROJECT_REPONAME}
+              echo ${CIRCLE_REPOSITORY_URL}
+              echo ${REPOURL}
+              echo ${REPOPATH}
+      - run:
+          name: Setup Github token
+          command: |
+            git remote set-url origin https://git:${GITHUB_TOKEN}@github.com${REPOPATH}.git
+      - run:
+          name: Deploy to gh-pages
+          command: npm run deploy #
 
 workflows:
-  test_my_app:
-    jobs: 
-      - install-and-test
+  test_and_deploy_my_app:
+    jobs:
+      - test-and-deploy:
+          context:
+            - github-context
