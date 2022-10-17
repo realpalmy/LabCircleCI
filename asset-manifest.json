@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/LabCircleCI/static/css/main.073c9b0a.css",
+    "main.js": "/LabCircleCI/static/js/main.7fade56d.js",
+    "static/js/787.d22bdc14.chunk.js": "/LabCircleCI/static/js/787.d22bdc14.chunk.js",
+    "static/media/logo.svg": "/LabCircleCI/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/LabCircleCI/index.html",
+    "main.073c9b0a.css.map": "/LabCircleCI/static/css/main.073c9b0a.css.map",
+    "main.7fade56d.js.map": "/LabCircleCI/static/js/main.7fade56d.js.map",
+    "787.d22bdc14.chunk.js.map": "/LabCircleCI/static/js/787.d22bdc14.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.7fade56d.js"
+  ]
+}
